@@ -1,10 +1,14 @@
 Installation:
-	I'm running 32-bit opencv version 3.1.0 , PyCharm Community, Windows 7
-	help for what I did can be found below:
+	I'm running...
+	+Windows 7
+	+Python 2.7.11
+	+PyCharm Community
+	+32-bit opencv version 3.1.0
+
+help for what I did can be found below:
 	+https://www.jetbrains.com/pycharm/download/#section=windows
 	+http://docs.opencv.org/master/d5/de5/tutorial_py_setup_in_windows.html#gsc.tab=0
 	+http://stackoverflow.com/questions/20999939/opencv-2-4-8-module-compiled-against-api-version-9
 
 Opencv Python Tutorials:
 	+http://opencv-python-tutroals.readthedocs.org/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html#display-image
-	
