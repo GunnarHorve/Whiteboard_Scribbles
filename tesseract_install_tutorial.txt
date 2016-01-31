@@ -1,0 +1,26 @@
+1. Install tesseract: 
+https://github.com/UB-Mannheim/tesseract/wiki
+
+2. Install pytesser: 
+pycharm -> file -> settings -> Project: Whitebaord_Scribbles -> Project Interpreter. 
+	a. Press the green + button to add a new module. 
+	b. Search for pytesseract and click "Install Package"
+
+3. The module will be installed in Python27/Lib/site-packages/pytesseract. According to the following documentation, 
+pytesser must be installed in the same file as the script using it. 
+https://code.google.com/archive/p/pytesser/issues/2
+Move the contents of pytesseract into Whiteboard_Scribbles/TestPkg1
+
+4. Need to specify the tesseract.exe location if it is not added as a path variable.  
+	a. Open pytesseract.py
+	b. Search tesseract_cmd
+	c. Change the string to TESSERACT_INSTALLATION\\tesseract.exe. For me, it was the following:
+	'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+
+5. Select a test image, add it to the images folder if desired, and use the following test Code:
+	from PIL import Image
+	import pytesseract
+
+	img = Image.open('images/test.png')
+	test = pytesseract.image_to_string(img)
+	print(test)
