@@ -1,5 +1,6 @@
 import cv2
-# import numpy as np
+import os
+import numpy as np
 from matplotlib import pyplot as plt
 
 # TODO: change me for your system
@@ -9,6 +10,9 @@ cv2.waitKey(0)
 # We want the blobs that we want to detect to be white, so we'll inversely threshold the image
 _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
 _, regions = cv2.connectedComponents(img, img)
+
+if not os.path.exists("../images/cc"):
+    os.makedirs("../images/cc")
 
 cv2.imshow('Thresholded Image', img)
 cv2.waitKey(0)
