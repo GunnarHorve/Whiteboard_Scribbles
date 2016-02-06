@@ -1,0 +1,14 @@
+1) I am following the following tutorial using his old english document which can be downloaded there
+http://michaeljaylissner.com/posts/2012/02/11/adding-new-fonts-to-tesseract-3-ocr-engine/#create-training-documents
+
+2) To run the "convert" command specified you have to install ImageMagick and ghostscript
+ImageMagick: http://www.imagemagick.org/script/binary-releases.php#windows
+ghostscript: http://sourceforge.net/projects/ghostscript/?source=typ_redirect
+
+3) Additionally, the syntax for conversion is for unix, the windows syntax (with monochrome added for good measure) is 
+   'convert -density 300x300 -depth 4 -monochrome lang.font-name.exp0.pdf lang.font-name.exp0.tif'
+
+4) To run tesseract in the first training step the path to the executable must be in your path 
+   also the location of the output file can't be in the Program file folder
+
+5) Now I am looking for a functioning box file editor to correct errors in the box file
