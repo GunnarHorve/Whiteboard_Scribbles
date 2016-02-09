@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import glob
-import math
 
 
 def main():
@@ -32,7 +31,7 @@ def find_bounding_box(image_path_list):
         http://stackoverflow.com/questions/13952659/detecting-concentric-circles-with-hough-circle-transform
         '''
         dp = 1
-        min_dist = 1
+        min_dist = 50
         canny_threshold = 70
         accum_threshold = 200
         min_radius = 50
@@ -49,7 +48,14 @@ def find_bounding_box(image_path_list):
         if circles is None:
             return
         circles = np.uint16(np.around(circles))
-        mean_max, mean_min = find_mean_bounding_circles(circles)
+
+        # cimg2 = cimg.copy()
+        # for circ in circles[0]:
+        #     cv2.circle(cimg2, (circ[0], circ[1]), 3, (0, 0, 255), 3)
+        #     cv2.circle(cimg2, (circ[0], circ[1]), circ[2], (0, 255, 0), 2)
+        # cv2.imshow("Detected circles", cimg2)
+
+        mean_max, mean_min = find_mean_bounding_circles(circles, cimg)
 
         # min bounding point
         cv2.circle(cimg, (mean_min[0], mean_min[1]), 3, (0, 0, 255), 3)
@@ -62,7 +68,7 @@ def find_bounding_box(image_path_list):
         cv2.waitKey(0)
 
 
-def find_mean_bounding_circles(circles):
+def find_mean_bounding_circles(circles, cimg):
     # Find min and max circle for each axis
     min_circle_x = circles[0, np.where(circles[0, :, 0] == np.amin(circles[0, :, 0]))][0][0]
     min_circle_y = circles[0, np.where(circles[0, :, 1] == np.amin(circles[0, :, 1]))][0][0]
@@ -74,9 +80,15 @@ def find_mean_bounding_circles(circles):
     max_x, max_y, _ = np.mean(np.vstack((max_circle_x, max_circle_y)), axis=0, dtype=int)
 
     # Find all circles within a box of radius tol
-    tol = 10
+    tol = 30
     min_list = np.where((abs(circles[0, :, 0] - min_x) < tol) - (abs(circles[0, :, 1] - min_y) < tol).all())
     max_list = np.where((abs(circles[0, :, 0] - max_x) < tol) - (abs(circles[0, :, 1] - max_y) < tol).all())
+
+    # cimg2 = cimg.copy()
+    # for circ in np.vstack((circles[0, min_list][0], circles[0, max_list][0])):
+    #     cv2.circle(cimg2, (circ[0], circ[1]), 3, (0, 0, 255), 3)
+    #     cv2.circle(cimg2, (circ[0], circ[1]), circ[2], (0, 255, 0), 2)
+    # cv2.imshow('Min and Max circles', cimg2)
 
     # Take the mean of those
     mean_min = np.mean(circles[0, min_list][0], axis=0, dtype=int)
