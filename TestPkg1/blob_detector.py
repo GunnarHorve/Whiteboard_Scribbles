@@ -12,6 +12,12 @@ def main():
 
 
 def find_connected_components(image_path_list, disp=False):
+    """
+    Finds all connected components for each image denoted by image_path_list
+    :param image_path_list: a list of file paths denoting the images to find connected components for
+    :param disp: Whether to display intermediate results
+    :return: None
+    """
     if not os.path.exists("../images/connected_components"):
         os.makedirs("../images/connected_components")
     for image_path in image_path_list:
@@ -26,6 +32,12 @@ def find_connected_components(image_path_list, disp=False):
 
 
 def _find_connected_components(img, disp=False):
+    """
+    Finds the connected components for the given image.
+    :param img: The image to find connected components for
+    :param disp: Whether to display intermediate results
+    :return: a grayscale image that shows all connected components for the given image
+    """
     # We want the blobs that we want to detect to be white, so we'll inversely threshold the image
     _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
     _, regions = cv2.connectedComponents(img, img)
