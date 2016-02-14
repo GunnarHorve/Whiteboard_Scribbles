@@ -41,6 +41,8 @@ if __name__ == '__main__':
 #             if "training" in file and "cropped" in file:
 #                 _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
 #                 img = normalizeTraningImage.normalizeTrainingImage(img, 30)
+#                 tabs = TabID.run(255-img,50)                                 #identify indent levels
+#                 print(tabs)
 #                 # cv2.imshow('Preprocessed Image', img)
 #                 # cv2.waitKey(0)
 #                 cv2.imwrite("../images/preprocessed/" + file, img)
