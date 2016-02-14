@@ -61,7 +61,7 @@ def _horizontally_blur_image(img):
 
 def main():
     img = cv2.imread('test1.png', 0)
-    img = cv2.imread('test2.png', 0)
+    # img = cv2.imread('test2.png', 0)
     cv2.imshow('Original', img)
     cv2.waitKey(0)
     img = normalize_training_image(img, 20)

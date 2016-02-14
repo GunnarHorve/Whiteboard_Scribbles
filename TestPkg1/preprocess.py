@@ -2,15 +2,15 @@ import cv2
 import sys
 import TabID
 import auto_crop
-from normalize_traning_image import normalize_training_image
+from normalize_training_image import normalize_training_image
 
 def main():
-    #img = cv2.imread(sys.argv[1:],0)                            #read in image from console
-    img = cv2.imread('../images/training/training1.jpg',0)       #read in image
-    img = auto_crop.crop_to_bounding_box(img)                     #crop image
-    _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV) #binarize image
-    img = normalize_training_image(255 - img, 50)                     #normalize image height
-    tabs = TabID.run(255-img,50)                                 #identify indent levels
+    #img = cv2.imread(sys.argv[1:],0)                               #read in image from console
+    img = cv2.imread('../images/training/training16.jpg',0)         #read in image
+    img = auto_crop.crop_to_bounding_box(img)                       #crop image
+    _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)    #binarize image
+    img = normalize_training_image(255 - img, 50)                   #normalize image height
+    tabs = TabID.run(255-img,50)                                    #identify indent levels
     print(tabs)
     cv2.imshow("TEST", img)
     cv2.waitKey(0)
@@ -33,7 +33,7 @@ if __name__ == '__main__':
 #
 #
 # def preprocessor_main():
-#     crop_to_bounding_boxes(glob.glob('../images/training/*training*'))
+#     auto_crop.crop_to_bounding_boxes(glob.glob('../images/training/*training*'))
 #     listing = os.listdir("../images/temp/")
 #     for file in listing:
 #         img = cv2.imread("../images/temp/" + file,0)
