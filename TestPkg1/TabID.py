@@ -1,15 +1,19 @@
 import cv2
 import os
 
-averageLineHeight = 20  #this value is used to kill questionable lines that are too thin (the dots of i's, for example)
-lineBlur = 20           #if lines aren't fully connecting to themselves, lower this number.
-tabWiggleRoom = 5       #this value is how many pixels an indent is allowed to very to still be the same tab level.
-
-def main():
+#averageLineHeight = 20  #this value is used to kill questionable lines that are too thin (the dots of i's, for example)
+#lineBlur = 20           #if lines aren't fully connecting to themselves, lower this number.
+#tabWiggleRoom = 5       #this value is how many pixels an indent is allowed to very to still be the same tab level.
+'''
+This is the intended function to be called from this module.  It takes in some parameters and returns the ordered
+indentation levels of a given image.
+    img = the input image (should contain text)
+    averageLineHeight = the expected vertical height of a line of text
+    lineBlur = how far the image is blurred to extract features (img.width/lineBlur)
+    tabWiggleRoom = how far in pixels tabs are allowed to be from on another before they are considered distinct
+'''
+def run(img, averageLineHeight = 20, lineBlur = 20, tabWiggleRoom = 5):
     #load image as grayscale
-    img = cv2.imread('../images/Test/tab_testing.png',0)
-    _, img = cv2.threshold(img, 200, 255, cv2.THRESH_BINARY_INV)
-
     #aggressively horizontally blur the image
     r, c = len(img), len(img[0])
     horizontalSize = c / lineBlur
@@ -19,9 +23,9 @@ def main():
     #Identify connected components & generate bounding boxes
     n, regions = cv2.connectedComponents(img, img)
     img = ccVisualization(regions, img)
-    bbs = generateBoundingBoxes(img,n)
+    bbs = generateBoundingBoxes(img,n,averageLineHeight)
 
-    print analyzeBBS(bbs)
+    return analyzeBBS(bbs,tabWiggleRoom)
 
 '''
 This function writes an image to a file and re-loads it so it can be visualized
@@ -38,7 +42,7 @@ def ccVisualization(regions, img):
 This function takes an image that has been parsed into regions and creates/stores bounding box
 information for every region
 '''
-def generateBoundingBoxes(img,n):
+def generateBoundingBoxes(img,n,averageLineHeight):
     boundingBoxStorage = [[], [], [], []] #stored as [[x][y][w][h]]
     for region in range(n):
         #imgCpy = cv2.inRange(img, n-region, n-region)
@@ -63,7 +67,7 @@ level of each line based on the bounding box for each line.  The data input shou
 Line indentation levels ordered from top line to bottom line are returned.
 (P.S., this is a relatively inefficient function.  Don't try to use it for an image with 1,000+ lines)
 '''
-def analyzeBBS(bbs):
+def analyzeBBS(bbs,tabWiggleRoom):
     ranges = []
     for x in bbs[0]:
         ranges += [(x-tabWiggleRoom, x+tabWiggleRoom)]
@@ -119,5 +123,3 @@ def combineAtRange(index,ranges):
         index -= offset
         del ranges[index]
     return ranges
-
-main()
