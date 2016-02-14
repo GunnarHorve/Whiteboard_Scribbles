@@ -5,4 +5,4 @@ images/connected_components/*
 images/bb/*
 images/detected/*
 images/temp/*
-*.pyc
+TestPkg1/*.pyc
