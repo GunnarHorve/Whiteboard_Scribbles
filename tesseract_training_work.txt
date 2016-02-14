@@ -11,4 +11,10 @@ ghostscript: http://sourceforge.net/projects/ghostscript/?source=typ_redirect
 4) To run tesseract in the first training step the path to the executable must be in your path 
    also the location of the output file can't be in the Program file folder
 
-5) Now I am looking for a functioning box file editor to correct errors in the box file
+5) Matched box and text file lengths by using Winmerge to compare value and finding miss gaps
+
+6) Change text to utf8 encoding before merging with box file
+
+7) exe on executables
+
+8) Use this tool instead of all of this ^^^^^^^^^^^^^^^^^^^^^
