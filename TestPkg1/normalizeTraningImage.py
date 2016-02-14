@@ -2,22 +2,11 @@ from __future__ import division
 import cv2
 import os
 
-def main():
-    img = cv2.imread('test1.png',0)
-    img = cv2.imread('test2.png',0)
-    cv2.imshow('Original', img)
-    cv2.waitKey(0)
-    img = normalizeTrainingImage(img, 20)
-    cv2.imshow('Resize', img)
-    cv2.waitKey(0)
-
-'''
-Takes in a binary image and normalizes the text within the image to the given height.
-'''
+"""" Takes in a binary image and normalizes the text within the image to the given height. """""
 def normalizeTrainingImage(img, thresholdHeight):
 
     cc = horizontallyBlurImage(img)
-    # _, cc = cv2.threshold(cc, 1, 255, cv2.THRESH_BINARY)
+    _, cc = cv2.threshold(cc, 1, 255, cv2.THRESH_BINARY)
     _,contours,hierarchy = cv2.findContours(cc, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     avgHeight = 0
@@ -80,7 +69,14 @@ def ccVisualization(regions, img):
     cv2.imwrite("../images/cc/cc.png", regions) # when we write out, we have the right data
     return cv2.imread("../images/cc/cc.png", 0)
 
+def main():
+    img = cv2.imread('test1.png',0)
+    img = cv2.imread('test2.png',0)
+    cv2.imshow('Original', img)
+    cv2.waitKey(0)
+    img = normalizeTrainingImage(img, 20)
+    cv2.imshow('Resize', img)
+    cv2.waitKey(0)
+
 if __name__ == '__main__':
     main()
-
-
