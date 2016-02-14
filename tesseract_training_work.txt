@@ -17,4 +17,6 @@ ghostscript: http://sourceforge.net/projects/ghostscript/?source=typ_redirect
 
 7) exe on executables
 
-8) Use this tool instead of all of this ^^^^^^^^^^^^^^^^^^^^^
+
+Maybe?
+8) http://www.softpedia.com/dyn-postdownload.php/5676f54059630123a7e2027dbd3426ec/56c0b788/32bd4/0/1?tsf=0
