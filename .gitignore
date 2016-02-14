@@ -2,4 +2,7 @@
 images/GunnarHandwriting*
 images/bb/*
 images/connected_components/*
+images/bb/*
+images/detected/*
+images/temp/*
 *.pyc
