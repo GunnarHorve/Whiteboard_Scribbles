@@ -1,15 +1,15 @@
 import cv2
 import sys
 import TabID
-import autoCrop
-from normalizeTraningImage import normalizeTrainingImage
+import auto_crop
+from normalize_traning_image import normalize_training_image
 
 def main():
     #img = cv2.imread(sys.argv[1:],0)                            #read in image from console
     img = cv2.imread('../images/training/training1.jpg',0)       #read in image
-    img = autoCrop.crop_to_bounding_box(img)                     #crop image
+    img = auto_crop.crop_to_bounding_box(img)                     #crop image
     _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV) #binarize image
-    img = normalizeTrainingImage(255-img,50)                     #normalize image height
+    img = normalize_training_image(255 - img, 50)                     #normalize image height
     tabs = TabID.run(255-img,50)                                 #identify indent levels
     print(tabs)
     cv2.imshow("TEST", img)
