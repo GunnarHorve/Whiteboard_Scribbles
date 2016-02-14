@@ -1,1 +1,5 @@
 .idea
+images/GunnarHandwriting*
+images/bb/*
+images/connected_components/*
+*.pyc
