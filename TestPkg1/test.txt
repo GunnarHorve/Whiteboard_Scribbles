@@ -1,0 +1,4 @@
+import sexytime
+
+for var in vars:
+hi = mom.dad
