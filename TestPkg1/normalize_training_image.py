@@ -1,11 +1,16 @@
 from __future__ import division
 import cv2
 import numpy as np
+from auto_crop import _reduce_image
 
 
-def normalize_training_image(img, threshold_height):
+def normalize_training_image(img, threshold_height, disp=False):
     """ Takes in a binary image and normalizes the text within the image to the given height. """
     img = _remove_circles(img)
+    if disp == True:
+        vis_img, _ = _reduce_image(img.copy())
+        cv2.imshow('Removed Bounding Circles', vis_img)
+        cv2.waitKey(0)
     cc = _horizontally_blur_image(img)
     _, cc = cv2.threshold(cc, 1, 255, cv2.THRESH_BINARY)
     _, contours, hierarchy = cv2.findContours(cc, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
