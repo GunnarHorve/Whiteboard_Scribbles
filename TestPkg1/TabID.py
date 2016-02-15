@@ -1,5 +1,6 @@
 import cv2
 import os
+import auto_crop
 
 #averageLineHeight = 20  #this value is used to kill questionable lines that are too thin (the dots of i's, for example)
 #lineBlur = 20           #if lines aren't fully connecting to themselves, lower this number.
@@ -12,14 +13,17 @@ indentation levels of a given image.
     lineBlur = how far the image is blurred to extract features (img.width/lineBlur)
     tabWiggleRoom = how far in pixels tabs are allowed to be from on another before they are considered distinct
 '''
-def run(img, averageLineHeight = 20, lineBlur = 20, tabWiggleRoom = 5):
+def run(img, averageLineHeight = 20, disp = False, lineBlur = 20, tabWiggleRoom = 5):
     #load image as grayscale
     #aggressively horizontally blur the image
     r, c = len(img), len(img[0])
     horizontalSize = c / lineBlur
     horizontalStructure = cv2.getStructuringElement(cv2.MORPH_RECT, (horizontalSize, 1))
     img = cv2.filter2D(img, -1, horizontalStructure)
-
+    if disp == True:
+        vis_img, _ = auto_crop._reduce_image(img.copy())
+        cv2.imshow('Horizontally Blur', vis_img)
+        cv2.waitKey(0)
     #Identify connected components & generate bounding boxes
     n, regions = cv2.connectedComponents(img, img)
     img = ccVisualization(regions, img)

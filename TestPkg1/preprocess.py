@@ -24,12 +24,14 @@ def main():
         cv2.imshow('Inverted', vis_img)
         cv2.waitKey(0)
     img = normalize_training_image(img, 50, disp)                   #normalize image height
-    tabs = TabID.run(255-img,50)                                    #identify indent levels
-    print(tabs)
+
     if disp == True:
         cv2.imshow('Normalized', img)
         cv2.waitKey(0)
     cv2.waitKey(0)
+
+    tabs = TabID.run(255-img,50, True, 12, 2)                                    #identify indent levels
+    print(tabs)
 
 #something with Tebbe
 #something with post processing
