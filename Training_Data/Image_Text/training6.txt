@@ -1,0 +1,12 @@
+def Class Goat():
+	def __init__(mother, father):
+		self.ma = mother
+		self.pa = father
+	def is_sibling(goat):
+		return (self.m ther == goat.mother || se .father = goat.fath r)
+	def age():
+		z = "I am"
+		Y = (self.ma + self.pa)/
+		X = "Years old"
+		return Z + str( ) + X
+	

@@ -1,0 +1,8 @@
+#This function is pointless
+def whatInTheWorldIsThis(z):
+	a=z&&20||0
+	w=z||9&&a
+	r=w&&|&&20
+	if(w&&r&&a):
+		print 'Why is this always printing?\n'
+	

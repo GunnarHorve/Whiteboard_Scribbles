@@ -1,0 +1,6 @@
+for range 0:10:
+i in
+	print i*i
+if (i*i == 64):
+	print 'That's my number'
+	

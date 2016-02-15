@@ -1,0 +1,6 @@
+a = 1+2+3+4+5+6
+b=a a/a
+c=sqrt(a**2+b**2)
+if(a+b+c=='tedius'):
+	print("You're God-damned right")
+	

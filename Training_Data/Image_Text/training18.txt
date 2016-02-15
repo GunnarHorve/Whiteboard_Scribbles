@@ -1,0 +1,10 @@
+def THISISATESTFUNCTION():
+	Variable1="Hey, I Am A radom String."
+	VARIABLE2="THIS IS ANOTHER RANDOM STRING."
+	BOOLEAN=false
+	int=0
+	for k in range(0, 10):
+		if BOOLEAN:
+			return true
+		else return false
+	

@@ -1,0 +1,11 @@
+def WhatAmI(q):
+	counterQ=0
+if !q.vegetable():
+	counterQ=counterQ+1
+if !q.mineral():
+	counterQ=counterQ*2
+if !q.animal():
+	counterQ=counterQ/3
+if !q.plant():
+	counterQ=counterQ-4
+	

@@ -1,0 +1,9 @@
+def DBZ_Sim():
+	Vegeta.brag()
+	Goku.eat()
+	Victor = fight(Vegeta, Goku)
+	if (Victor.name == Goku):
+		Vegeta.pout()
+	else:
+		Goku.train()
+	

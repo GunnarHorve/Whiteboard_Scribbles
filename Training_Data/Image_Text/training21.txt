@@ -1,0 +1,4 @@
+# /sad panda\
+true || false == true
+#vardad
+	

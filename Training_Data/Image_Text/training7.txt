@@ -1,0 +1,8 @@
+def quickEazySort(a):
+	b = ''
+	for i in range 1:a.len():
+		if a[i]<b[1]:
+			b[1]=a[i]
+	#This does not actually sort
+	#Too bad it is just a test
+	

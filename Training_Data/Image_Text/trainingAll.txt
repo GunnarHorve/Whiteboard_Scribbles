@@ -1,0 +1,165 @@
+training1:
+for i in range 0:10:
+	print i*i
+if (i*i == 64):
+	print 'That's my number'
+
+training2:
+def swap(a, b):
+	z = a
+	a = b
+	b = z
+
+training3:
+text = "Help I'm trapped in a loop \n"
+while (1):
+	for i in range 1:text.len():
+	print text
+
+training4:
+def LoveDoctor(panda):
+	if (pana.sad):
+	panda.feed()
+
+training5:
+def DBZ_Sim():
+	Vegeta.brag()
+	Goku.eat()
+	Victor = fight(Vegeta, Goku)
+	if (Victor.name == Goku):
+		Vegeta.pout()
+	else:
+		Goku.train()
+
+training6:
+def Class Goat():
+	def __init__(mother, father):
+		self.ma = mother
+		self.pa = father
+	def is_sibling(goat):
+		return (self.mother == goat.mother || self.father = goat.father)
+	def age():
+		z = "I am"
+		Y = (self.ma + self.pa)/z
+		X = "Years old"
+		return Z + str(Y) + X
+
+training7:
+def quickEazySort(a):
+	b = ''
+	for i in range 1:a.len():
+		if a[i]<b[1]:
+			b[1]=a[i]
+	#This does not actually sort
+	#Too bad it is just a test
+	
+training8:
+a = 1+2+3+4+5+6
+b=a*a/a
+c=sqrt(a**2+b**2)
+if(a+b+c=='tedius'):
+	print("You're God-damned right")
+
+training9:
+def WhatAmI(q):
+	counterQ=0
+if !q.vegetable():
+	counterQ=counterQ+1
+if !q.mineral():
+	counterQ=counterQ*2
+if !q.animal():
+	counterQ=counterQ/3
+if !q.plant():
+	counterQ=counterQ-4
+
+training10:
+s="z"
+f="_"
+B="_"
+a=5
+f=(a-2)*f
+f+B+s
+
+training11:
+STRING="1,2,3,4,5,6,7,8,9"
+STRING[0]==STRING[18]
+STR_2=9867-45231+0123+465789+""
+STR_3=1-2-3-4-5-6-7-8-9-0
+
+training12:
+s="z"
+f="_"
+B="_"
+a=5
+f=(a-2)*f
+f+B+s
+
+training13:
+#This function is pointless
+def whatInTheWorldIsThis(z):
+	a=z&&20||0
+	w=z||9&&a
+	r=w&&|&&20
+	if(w&&r&&a):
+		print 'Why is this always printing?\n'
+
+training 14:
+a=[]
+a+=1.2+2.3+3.4+4.5+5.6+1.9
+a[0]=a[0]+6.7+7.8+8.9+0.0+9.0
+
+training15:
+s="z"
+f="_"
+B="_"
+a=5
+f=(a-2)*f
+f+B+s
+
+training16:
+#This function is pointless
+def whatInTheWorldIsThis(z):
+	a=z&&20||0
+	w=z||9&&a
+	r=w&&|&&20
+	if(w&&r&&a):
+		print 'Why is this always printing?\n'
+
+training17:
+def THISISMORECAPITOLLETTERS():
+	ZACH="ZACH"
+	XIANZ="XIANZ"
+	ZZTOP="ZZTOP"
+	EXIT="EXITTHROUGHTHEGIFTSHOP"
+	WRITINGZ="WRITINGSOMEZS"
+	ZOMBZ="NOMOREZOMBZS"
+
+training18:
+def THISISATESTFUNCTION():
+	Variable1="Hey, I Am A radom String."
+	VARIABLE2="THIS IS ANOTHER RANDOM STRING."
+	BOOLEAN=false
+	int=0
+	for k in range(0, 10):
+		if BOOLEAN:
+			return true
+		else return false
+
+training19:
+def printRandomString()
+	text1='well here we go'
+	text2='\+The cake is a lie'
+	reply='\+459_z18brz7'
+	reply2='\\???\\'
+	print text1+text2
+	print reply+reply2
+
+training20:
+_hello=2/5+7/8 #tragic
+_goodbye=1/3+(4/6)*9 #50-50
+print _hello +_goodbye+"/n"+"/n"
+
+training21:
+# /sad panda\
+true || false == true
+#vardad

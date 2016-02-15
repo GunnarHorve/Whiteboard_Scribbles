@@ -1,0 +1,4 @@
+def LoveDoctor(panda):
+	if (panda.sad):
+	panda.feed()
+	
