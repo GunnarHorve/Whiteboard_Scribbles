@@ -71,7 +71,7 @@ import shlex
 
 __all__ = ['image_to_string']
 
-def run_tesseract(input_filename, output_filename_base, lang=None, boxes=False, config=None):
+def run_tesseract(input_filename, output_filename_base, lang, boxes=False, config=None):
     '''
     runs the command:
         `tesseract_cmd` `input_filename` `output_filename_base`
@@ -125,7 +125,7 @@ class TesseractError(Exception):
         self.message = message
         self.args = (status, message)
 
-def image_to_string(image, lang=None, boxes=False, config=None):
+def image_to_string(image, lang, boxes=False, config=None):
     '''
     Runs tesseract on the specified image. First, the image is written to disk,
     and then the tesseract command is run on the image. Resseract's result is

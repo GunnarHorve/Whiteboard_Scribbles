@@ -7,9 +7,11 @@ import glob
 import shutil
 import os
 import cv2
+import pytesseract
+from PIL import Image
 
 def main():
-    disp = True
+    disp = False
     #img = cv2.imread(sys.argv[1:],0)                               #read in image from console
     img = cv2.imread('../images/training/training1.jpg',0)         #read in image
     img = auto_crop.crop_to_bounding_box(img, disp)                       #crop image
@@ -34,6 +36,13 @@ def main():
     print(tabs)
 
 #something with Tebbe
+    cv2.imwrite("text.png", img)
+    # pilImg = Image.open('..\\images\\preprocessed\\training1_cropped.png')
+    pilImg = Image.open("text.png")
+    pilImg.show()
+    translation = pytesseract.image_to_string(pilImg, 'hww')
+    print (translation)
+
 #something with post processing
 
 # def main():
