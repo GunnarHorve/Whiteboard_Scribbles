@@ -1,6 +1,6 @@
-def printRandomString()
+def print andomString()
 	text1='well here we go'
-	text2='\+The cake is a lie'
+	te2=\+The cake is a lie'
 	reply='\+459_z18brz7'
 	reply2='\\???\\'
 	print text1+text2

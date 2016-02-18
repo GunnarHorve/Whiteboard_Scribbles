@@ -9,3 +9,4 @@ TestPkg1/*.pyc
 Training_Data/*box.bak*
 Training_Data/*.bat
 Training_Data/*.png
+Training_Data/TrainDate

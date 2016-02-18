@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TesseractProject>
+  <TessImages>
+    <Images>hww.handonboard.exp2.tif</Images>
+    <Images>hww.handonboard.exp3.tif</Images>
+    <Images>hww.handonboard.exp1.tif</Images>
+    <Images>hww.handonboard.exp7.tif</Images>
+  </TessImages>
+  <TessBoxFiles>
+    <BoxFiles>hww.handonboard.exp2.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp3.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp1.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp7.box</BoxFiles>
+  </TessBoxFiles>
+  <FinalTessdata />
+</TesseractProject>

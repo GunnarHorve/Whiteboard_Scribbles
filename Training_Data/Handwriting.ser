@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TesseractProject>
+  <TessImages>
+    <Images>hww.handonboard.exp2.tif</Images>
+    <Images>hww.handonboard.exp3.tif</Images>
+    <Images>hww.handonboard.exp4.tif</Images>
+    <Images>hww.handonboard.exp5.tif</Images>
+    <Images>hww.handonboard.exp6.tif</Images>
+    <Images>hww.handonboard.exp7.tif</Images>
+    <Images>hww.handonboard.exp8.tif</Images>
+    <Images>hww.handonboard.exp9.tif</Images>
+    <Images>hww.handonboard.exp20.tif</Images>
+    <Images>hww.handonboard.exp21.tif</Images>
+    <Images>hww.handonboard.exp1.tif</Images>
+    <Images>hww.handonboard.exp10.tif</Images>
+    <Images>hww.handonboard.exp11.tif</Images>
+    <Images>hww.handonboard.exp12.tif</Images>
+    <Images>hww.handonboard.exp13.tif</Images>
+    <Images>hww.handonboard.exp14.tif</Images>
+    <Images>hww.handonboard.exp15.tif</Images>
+    <Images>hww.handonboard.exp16.tif</Images>
+    <Images>hww.handonboard.exp17.tif</Images>
+    <Images>hww.handonboard.exp18.tif</Images>
+    <Images>hww.handonboard.exp19.tif</Images>
+  </TessImages>
+  <TessBoxFiles>
+    <BoxFiles>hww.handonboard.exp2.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp3.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp4.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp5.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp6.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp7.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp8.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp9.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp20.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp21.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp1.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp10.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp11.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp12.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp13.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp14.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp15.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp16.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp17.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp18.box</BoxFiles>
+    <BoxFiles>hww.handonboard.exp19.box</BoxFiles>
+  </TessBoxFiles>
+  <FinalTessdata />
+</TesseractProject>

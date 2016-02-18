@@ -1,8 +1,8 @@
 def THISISATESTFUNCTION():
-	Variable1="Hey, I Am A radom String."
-	VARIABLE2="THIS IS ANOTHER RANDOM STRING."
+	Variable1="Hey, I Am A random String."
+	VARIABLE2="THIS IS 
 	BOOLEAN=false
-	int=0
+	int=0 ANOTHER RANDOM STRING."
 	for k in range(0, 10):
 		if BOOLEAN:
 			return true
