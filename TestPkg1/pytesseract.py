@@ -57,7 +57,7 @@ CONTRIBUTERS:
 '''
 
 # CHANGE THIS IF TESSERACT IS NOT IN YOUR PATH, OR IS NAMED DIFFERENTLY
-tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
+tesseract_cmd = '..\\Tesseract\\tesseract.exe'
 
 try:
     import Image
