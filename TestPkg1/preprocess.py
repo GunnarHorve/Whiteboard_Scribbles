@@ -25,7 +25,7 @@ def main():
         vis_img, _ = auto_crop._reduce_image(img.copy())
         cv2.imshow('Inverted', vis_img)
         cv2.waitKey(0)
-    img = normalize_training_image(img, 50, disp)                   #normalize image height
+    img = normalize_training_image(img, 30, disp)                   #normalize image height
 
     if disp == True:
         cv2.imshow('Normalized', img)
@@ -37,9 +37,8 @@ def main():
 
 #something with Tebbe
     cv2.imwrite("text.png", img)
-    # pilImg = Image.open('..\\images\\preprocessed\\training1_cropped.png')
     pilImg = Image.open("text.png")
-    pilImg.show()
+    # pilImg.show()
     translation = pytesseract.image_to_string(pilImg, 'hww')
     print (translation)
 
