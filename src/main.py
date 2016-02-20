@@ -1,3 +1,7 @@
+import glob
+import os
+import shutil
+
 import cv2
 from PIL import Image
 
@@ -6,9 +10,6 @@ import pytesseract
 from id_tabs import id_tabs
 from normalize_training_image import normalize_training_image
 from postprocess import proofread
-import glob
-import os
-import shutil
 
 
 def main():
@@ -33,13 +34,14 @@ def main():
     cv2.waitKey(0)
 
     tabs = id_tabs(255 - img, 50, 12, 2)  # identify indent levels
+    # print tabs
     cv2.imwrite("text.png", img)
     pil_img = Image.open("text.png")
     translation = pytesseract.image_to_string(pil_img, 'hww')
-    print translation
+    # print translation
 
-    # foo = proofread(translation.split('\n'))
-    # print foo
+    foo = proofread(translation.split('\n'), tabs)
+    print foo
 
 if __name__ == '__main__':
     main()

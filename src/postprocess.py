@@ -1,28 +1,26 @@
-from util import Counter
-import os
+import keyword
 
-pythonKeywords = ['False', 'True', 'and', 'or', 'not', 'def',
-                  'elif', 'else', 'if', 'while', 'for', 'in',
-                  'range', 'return', 'print', 'import']
+from util import Counter
 
 definedVars = Counter()
 
 
-def proofread_from_file(file_path):
+def proofread_from_file(file_path, tabs):
     """
     Proofreads the given file for correct Python.
     :param file_path: the path to the file to read
     """
-    my_file = open(file_path, "r")
-    lines = my_file.readlines()
-    my_file.close()
-    return proofread(lines)
+    with open(file_path, "r") as my_file:
+        lines = my_file.readlines()
+        my_file.close()
+        return proofread(lines, tabs)
 
 
-def proofread(lines):
+def proofread(lines, tabs):
     """
     Proofresd the given list of lines for correct Python
     :param lines: the list of lines to proofread
+    :param tabs: a list of integers defining the tab levels of the lines
     """
     # populate definedVars
     _declare_python_language()
@@ -31,13 +29,14 @@ def proofread(lines):
     # populate used_vars
     used_vars = _find_variables(lines)
     proof = _check_spelling(lines, used_vars)
-    proof = os.linesep.join([s for s in proof.splitlines() if s])
-    with_tabs = _add_tabs(proof, [1, 2, 3])
+    # proof = os.linesep.join([s for s in proof.splitlines() if s])
+    with_tabs = _add_tabs(proof, tabs)
+
     return with_tabs
 
 
 def _declare_python_language():
-    for word in pythonKeywords:
+    for word in keyword.kwlist + dir(__builtins__):
         definedVars[word] = -1
 
 
@@ -53,6 +52,27 @@ def _declare_vars(lines):
     line_num = 0
     for line in lines:
         line_num += 1
+        if '"""' in line:
+            # TODO: find matching triple-quote, take everything in between as a literal
+            pass
+        if "'''" in line:
+            # same
+            pass
+        if '"' in line:
+            # TODO: find matching quote, take everything in between as a literal
+            # GOTCHA if future work: escaped quotes
+            pass
+        if "'" in line:
+            # same
+            pass
+        if '[' in line:
+            # TODO: treat the letters connected to this on the left as a variable
+            # this may go better in findVars
+            pass
+        if '{' in line:
+            # same
+            pass
+
         if '=' in line:
             lhs = str.split(line, '=')[0].strip()
             if ',' in lhs:
@@ -70,6 +90,12 @@ def _declare_vars(lines):
         if 'for' in line:
             rhs = str.split(line, 'for')[1].strip()
             _add_to_dict(str.split(rhs, ' ')[0].strip(), line_num)
+        if 'def' in line:
+            var = line[line.index('def') + 4: line.index('(')]
+            _add_to_dict(var, line_num)
+        if 'class' in line:
+            var = line[line.index('class') + 6: line.index('(')]
+            _add_to_dict(var, line_num)
 
 
 def _add_to_dict(item, line_num):
@@ -237,7 +263,29 @@ def _get_match(var, line_num):
 def _add_tabs(s, tabs):
     to_return = ""
     lines = str.split(s, '\n')
+    j = 0
     for i in range(min(len(tabs), len(lines))):
-        to_return += tabs[i] * "   " + lines[i] + "\n"
+        line = lines[i + j]
+        while line == '':
+            j += 1
+            line = lines[i + j]
+            to_return += '\n'
+        to_return += tabs[i] * "  " + line + "\n"
 
     return to_return
+
+
+def main():
+    with open('./generate_training_data.py', 'r') as my_file:
+        lines = my_file.readlines()
+        for i in range(len(lines)):
+            lines[i] = lines[i].replace('\t', '').strip(' ')
+
+        print proofread(lines,
+                              [0, 0, 0, 1, 1, 2, 2, 3, 4, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 3, 2, 2, 2, 2,
+                               2, 2,
+                               1, 0, 1])
+
+
+if __name__ == "__main__":
+    main()
