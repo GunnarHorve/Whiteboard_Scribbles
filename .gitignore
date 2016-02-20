@@ -5,7 +5,7 @@ images/connected_components/*
 images/bb/*
 images/detected/*
 images/temp/*
-TestPkg1/*.pyc
+*/*.pyc
 Training_Data/*box.bak*
 Training_Data/*.bat
 Training_Data/*.png
