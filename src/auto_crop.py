@@ -5,11 +5,12 @@ import cv2
 import numpy as np
 
 
-def crop_to_bounding_boxes(image_path_list, disp=False, save_images=False):
+def crop_to_bounding_boxes(image_path_list, save_images=False, disp=False):
     """
     Attempts to crop all of the images in the given list of file paths.
     If an image cannot be cropped properly, an Exception is logged and the image is ignored.
     :param image_path_list: A list of paths for the images to crop
+    :param save_images: whether to save the images to a predefined temp directory
     :param disp: Whether to display intermediate results
     :return: None
     """
@@ -23,7 +24,7 @@ def crop_to_bounding_boxes(image_path_list, disp=False, save_images=False):
 
         try:
             if save_images:
-                cropped_img = crop_to_bounding_box(img, disp, image_path=filename + '.png')
+                cropped_img = crop_to_bounding_box(img, image_path=filename + '.png', disp=disp)
             else:
                 cropped_img = crop_to_bounding_box(img, disp)
             filename = '../images/temp/' + filename + '_cropped.png'
@@ -34,11 +35,12 @@ def crop_to_bounding_boxes(image_path_list, disp=False, save_images=False):
             continue
 
 
-def crop_to_bounding_box(img, disp=False, image_path=None):
+def crop_to_bounding_box(img, image_path=None, disp=False):
     """
     Attempts to find the bounding box for an image and crop it to that box.
     Throws an exception if one of the cropped image's dimensions is 0.
     :param img: The image to crop
+    :param image_path: The path to save the image to
     :param disp: Whether to display intermediate results
     :return: the cropped image, if it is valid.
     :raises Exception: If one of the cropped image's dimensions is 0, or if there is an error in _find_bounding_box
@@ -49,7 +51,7 @@ def crop_to_bounding_box(img, disp=False, image_path=None):
             cropped_img = img[mean_min[1]:mean_max[1], mean_min[0]:mean_max[0]]
             if cropped_img.shape[0] != 0 and cropped_img.shape[1] != 0:
                 if disp:
-                    vis_img, _ = _reduce_image(cropped_img.copy())
+                    vis_img, _ = reduce_image(cropped_img.copy())
                     cv2.imshow('Cropped', vis_img)
                     cv2.waitKey(0)
                 return cropped_img
@@ -61,7 +63,7 @@ def crop_to_bounding_box(img, disp=False, image_path=None):
         raise Exception('Unable to crop image', e)
 
 
-def _reduce_image(img):
+def reduce_image(img):
     max_size = 700.0  # pixels
     rows, cols = img.shape[:2]
     scale = 1.0
@@ -72,7 +74,6 @@ def _reduce_image(img):
             scale = cols / max_size
 
         img = cv2.resize(img, (int(cols / scale), int(rows / scale)), interpolation=cv2.INTER_AREA)
-        rows, cols = img.shape[:2]
 
     return img, scale
 
@@ -111,7 +112,7 @@ def _find_bounding_box(img, disp=False, image_path=None):
 
     if circles is not None:
         vis_img = gray_img.copy()
-        vis_img, scale = _reduce_image(vis_img)
+        vis_img, scale = reduce_image(vis_img)
         for circ in circles[0]:
             circ = np.int32(circ / scale)
             cv2.circle(vis_img, (circ[0], circ[1]), 3, (0, 0, 255), 3)
@@ -132,11 +133,11 @@ def _find_bounding_box(img, disp=False, image_path=None):
 
     circles = np.uint32(np.around(circles))
 
-    mean_min, mean_max = _find_mean_bounding_circles(circles, gray_img, disp)
+    mean_min, mean_max = _find_mean_bounding_circles(circles)
 
     if disp or image_path:
         vis_img = gray_img.copy()
-        vis_img, scale = _reduce_image(vis_img)
+        vis_img, scale = reduce_image(vis_img)
 
         mean_min2 = np.int32(mean_min / scale)
         mean_max2 = np.int32(mean_max / scale)
@@ -159,13 +160,11 @@ def _find_bounding_box(img, disp=False, image_path=None):
     return mean_min, mean_max
 
 
-def _find_mean_bounding_circles(circles, gray_img=None, disp=False):
+def _find_mean_bounding_circles(circles):
     """
     Given a set of Hough-detected circles for the given image,
         attempts to find the circles which best define the image's bounding box.
     :param circles: The list of circles from which to find the min and max circles
-    :param gray_img: The image to display. Defaults to None
-    :param disp: Whether to display intermediate results
     :return: Two circles which denote the upper-left and lower-right corners of the image's bounding box.
     """
     # Find min and max circle for each axis
@@ -196,15 +195,6 @@ def _find_mean_bounding_circles(circles, gray_img=None, disp=False):
     if len(max_list) == 0:
         max_list = np.zeros(shape=(1, 3), dtype=np.uint32)
         max_list[0] = np.array([max_x, max_y, max_rad])
-
-    # if disp and gray_img is not None:
-    #     vis_img = gray_img.copy()
-    #     vis_img, scale = _reduce_image(vis_img)
-    #     for circ in np.vstack((min_list, max_list)):
-    #         circ = np.int32(circ / scale)
-    #         cv2.circle(vis_img, (circ[0], circ[1]), 3, (0, 0, 255), 3)
-    #         cv2.circle(vis_img, (circ[0], circ[1]), circ[2], (0, 255, 0), 2)
-    #     cv2.imshow('Min and Max circles', vis_img)
 
     # Take the mean of those
     mean_min = np.mean(min_list, axis=0, dtype=int)

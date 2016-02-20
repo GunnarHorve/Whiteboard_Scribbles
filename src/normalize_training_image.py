@@ -1,14 +1,18 @@
 from __future__ import division
 import cv2
 import numpy as np
-from auto_crop import _reduce_image
+from auto_crop import reduce_image
 
 
 def normalize_training_image(img, threshold_height, disp=False):
-    """ Takes in a binary image and normalizes the text within the image to the given height. """
+    """ Takes in a binary image and normalizes the text within the image to the given height.
+    :param img: the image to normalize
+    :param threshold_height: the average height we're trying to obtain
+    :param disp: whether to display intermediate results
+    """
     img = _remove_circles(img)
-    if disp == True:
-        vis_img, _ = _reduce_image(img.copy())
+    if disp:
+        vis_img, _ = reduce_image(img.copy())
         cv2.imshow('Removed Bounding Circles', vis_img)
         cv2.waitKey(0)
     cc = _horizontally_blur_image(img)
@@ -19,7 +23,7 @@ def normalize_training_image(img, threshold_height, disp=False):
     for cnt in contours:
         x, y, w, h = cv2.boundingRect(cnt)
         avg_height += h
-    avg_height = avg_height / len(contours)
+    avg_height /= len(contours)
 
     parsed_contours = []
     for cnt in contours:
@@ -31,7 +35,7 @@ def normalize_training_image(img, threshold_height, disp=False):
     for cnt in parsed_contours:
         x, y, w, h = cv2.boundingRect(cnt)
         new_avg_height += h
-    new_avg_height = new_avg_height / len(parsed_contours)
+    new_avg_height /= len(parsed_contours)
 
     # minHeight = float("inf")
     # maxHeight = 0
