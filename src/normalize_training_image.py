@@ -5,7 +5,8 @@ from auto_crop import reduce_image
 
 
 def normalize_training_image(img, threshold_height, disp=False):
-    """ Takes in a binary image and normalizes the text within the image to the given height.
+    """
+    Takes in a binary image and normalizes the text within the image to the given height.
     :param img: the image to normalize
     :param threshold_height: the average height we're trying to obtain
     :param disp: whether to display intermediate results
@@ -37,25 +38,11 @@ def normalize_training_image(img, threshold_height, disp=False):
         new_avg_height += h
     new_avg_height /= len(parsed_contours)
 
-    # minHeight = float("inf")
-    # maxHeight = 0
-    # for cnt in parsed_contours:
-    #     x, y, w, h = cv2.boundingRect(cnt)
-    #     maxHeight = max(maxHeight, h)
-    #     minHeight = min(minHeight, h)
-    #
-    # avg_height = 0
-    # for cnt in parsed_contours:
-    #     x, y, w, h = cv2.boundingRect(cnt)
-    #     newHeight = (h - minHeight) * (thresholdHeight / (maxHeight - minHeight))
-    #     avg_height += newHeight
-    # avg_height = avg_height / len(contours)
-
     p = threshold_height / new_avg_height
 
     height, width = img.shape
     dim = (int(width * p), int(height * p))
-    return cv2.resize(img, dim)
+    return cv2.resize(img, dim), threshold_height
 
 
 def _horizontally_blur_image(img):
@@ -70,6 +57,9 @@ def _horizontally_blur_image(img):
 
 
 def _remove_circles(img):
+    """
+    Removes the remains of the bounding circles from the image.
+    """
     n, regions = _find_connected_components((255 - img))
     x, y, w, h = cv2.boundingRect(regions)
     for i in range(1, n):

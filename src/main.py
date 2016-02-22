@@ -13,52 +13,64 @@ from postprocess import proofread
 
 
 def main():
-    disp = False                                                    # Set to true to view pre-processing of the images.
-    img = cv2.imread('../images/training/training1.jpg', 0)         # read in image
-    img = auto_crop.crop_to_bounding_box(img, disp)                 # crop image
-    _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)    # binarize image
+    disp = False  # Set to true to view pre-processing of the images.
+    img = cv2.imread('../images/training/training3.jpg', 0)
+    img = auto_crop.crop_to_bounding_box(img, disp=disp)
+    # binarize image
+    _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
     if disp:
         vis_img, _ = auto_crop.reduce_image(img.copy())
         cv2.imshow('Binary Image', vis_img)
         cv2.waitKey(0)
+
     img = 255 - img
     if disp:
         vis_img, _ = auto_crop.reduce_image(img.copy())
         cv2.imshow('Inverted', vis_img)
         cv2.waitKey(0)
-    img = normalize_training_image(img, 30, disp)  # normalize image height
+
+    # normalize image height
+    img, avg_line_height = normalize_training_image(img, 30, disp=disp)
 
     if disp:
         cv2.imshow('Normalized', img)
         cv2.waitKey(0)
     cv2.waitKey(0)
 
-    tabs = id_tabs(255 - img, 50, 12, 2)  # identify indent levels
-    # print tabs
+    # identify indent levels
+    tabs = id_tabs(255 - img,
+                   avg_line_height=avg_line_height,
+                   line_blur=20,
+                   tab_wiggle_room=2,
+                   disp=True)
+    print tabs
     cv2.imwrite("text.png", img)
     pil_img = Image.open("text.png")
     translation = pytesseract.image_to_string(pil_img, 'hww')
-    # print translation
+    print "TESSERACT RESULTS: "
+    print translation
 
-    foo = proofread(translation.split('\n'), tabs)
-    print foo
+    print "\n\nPROOFREAD: "
+    print proofread(translation.split('\n'), tabs)
 
-if __name__ == '__main__':
-    main()
 
 def preprocess_images():
     auto_crop.crop_to_bounding_boxes(glob.glob('../images/training/*training*'))
     listing = os.listdir("../images/temp/")
     for file in listing:
-        img = cv2.imread("../images/temp/" + file,0)
+        img = cv2.imread("../images/temp/" + file, 0)
         if file != "training":
             if "training" in file and "cropped" in file:
                 _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
                 img = normalize_training_image(img, 30)
-                tabs = id_tabs.run(255-img,50)
+                tabs = id_tabs(255 - img, 50)
                 print(tabs)
                 cv2.imwrite("../images/preprocessed/" + file, img)
 
     # cleanup: remove temp folder
     if os.path.exists('../images/temp'):
         shutil.rmtree('../images/temp')
+
+
+if __name__ == '__main__':
+    main()

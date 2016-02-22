@@ -91,11 +91,17 @@ def _declare_vars(lines):
             rhs = str.split(line, 'for')[1].strip()
             _add_to_dict(str.split(rhs, ' ')[0].strip(), line_num)
         if 'def' in line:
-            var = line[line.index('def') + 4: line.index('(')]
-            _add_to_dict(var, line_num)
+            try:
+                var = line[line.index('def') + 4: line.index('(')]
+                _add_to_dict(var, line_num)
+            except:
+                pass
         if 'class' in line:
-            var = line[line.index('class') + 6: line.index('(')]
-            _add_to_dict(var, line_num)
+            try:
+                var = line[line.index('class') + 6: line.index('(')]
+                _add_to_dict(var, line_num)
+            except:
+                pass
 
 
 def _add_to_dict(item, line_num):
@@ -169,7 +175,7 @@ def _check_spelling(lines, used_vars):
         left_index = 0
         is_line_good = True
         for var in used_vars[i]:
-            if definedVars[var] != 0:
+            if definedVars[var] != 0 or len(var) == 0:
                 continue
             is_line_good = False
             matched_letters = 0
@@ -188,7 +194,9 @@ def _check_spelling(lines, used_vars):
                     left_index += matched_letters
                     matched_letters = 0
         if is_line_good:
-            to_return += lines[i]
+            to_return += lines[i] + '\n'
+        else:
+            to_return += '\n'
     return to_return
 
 
@@ -210,7 +218,7 @@ def _get_score(s1, s2):
     if(aresimlilar):
         replace word with dictionary match
     """
-    if abs(len(s1) - len(s2)) > 1:
+    if abs(len(s1) - len(s2)) > 1 or len(s1) == 0 or len(s2) == 0:
         return 0
 
     letter_sum = 0
@@ -265,11 +273,15 @@ def _add_tabs(s, tabs):
     lines = str.split(s, '\n')
     j = 0
     for i in range(min(len(tabs), len(lines))):
+        if i + j >= len(lines):
+            break
         line = lines[i + j]
         while line == '':
-            j += 1
-            line = lines[i + j]
             to_return += '\n'
+            j += 1
+            if i + j >= len(lines):
+                break
+            line = lines[i + j]
         to_return += tabs[i] * "  " + line + "\n"
 
     return to_return
@@ -279,12 +291,12 @@ def main():
     with open('./generate_training_data.py', 'r') as my_file:
         lines = my_file.readlines()
         for i in range(len(lines)):
-            lines[i] = lines[i].replace('\t', '').strip(' ')
+            lines[i] = lines[i].replace('\t', '').strip(' ').replace('\n', '').replace('\r', '')
 
         print proofread(lines,
-                              [0, 0, 0, 1, 1, 2, 2, 3, 4, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 3, 2, 2, 2, 2,
-                               2, 2,
-                               1, 0, 1])
+                        [0, 0, 0, 1, 1, 2, 2, 3, 4, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 3, 2, 2, 2, 2,
+                         2, 2,
+                         1, 0, 1])
 
 
 if __name__ == "__main__":

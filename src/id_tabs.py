@@ -9,15 +9,16 @@ import auto_crop
 # averageLineHeight = 20 # this value is used to kill questionable lines that are too thin (e.g. the dots of i's)
 # lineBlur = 20          # if lines aren't fully connecting to themselves, lower this number.
 # tabWiggleRoom = 5      # this value is how many pixels an indent is allowed to very to still be the same tab level.
-def id_tabs(img, average_line_height=20, line_blur=20, tab_wiggle_room=5, disp=False):
+def id_tabs(img, avg_line_height=20, line_blur=20, tab_wiggle_room=5, disp=False):
     """
-    This is the intended function to be called from this module.  It takes in some parameters and returns the ordered
-    indentation levels of a given image.
+    Attempts to identify the indent level of each line of text, with the assumption that the first line is at level 0.
+
     :param img: the input image (should contain text)
-    :param average_line_height: the expected vertical height of a line of text
+    :param avg_line_height: the expected vertical height of a line of text
     :param line_blur: how far the image is blurred to extract features (img.width/line_blur)
     :param tab_wiggle_room: how far in pixels tabs are allowed to be from on another before they are considered distinct
     :param disp: whether to display intermediate results
+    :return: An integer list representing the tab level for each line
     """
     # load image as grayscale
     # aggressively horizontally blur the image
@@ -32,23 +33,23 @@ def id_tabs(img, average_line_height=20, line_blur=20, tab_wiggle_room=5, disp=F
     # Identify connected components & generate bounding boxes
     n, regions = cv2.connectedComponents(img, img)
     img = np.uint8(regions)
-    bbs = _generate_bounding_boxes(img, n, average_line_height)
+    bbs = _generate_bounding_boxes(img, n, avg_line_height)
 
     return _analyze_bounding_boxes(bbs, tab_wiggle_room)
 
 
-def _generate_bounding_boxes(img, n, average_line_height):
+def _generate_bounding_boxes(img, n, avg_line_height):
     """
     This function takes an image that has been parsed into regions and creates/stores bounding box
     information for every region
     """
     bounding_box_storage = [[], [], [], []]  # stored as [[x][y][w][h]]
-    for region in range(n):
+    for region in range(1, n):
         # img_copy = cv2.inRange(img, n-region, n-region)
         img_copy = cv2.inRange(img, region, region)
 
         x, y, w, h = cv2.boundingRect(img_copy)
-        if h > average_line_height / 2 and h < average_line_height * 2:  # only keep things that are actually lines
+        if avg_line_height / 2 < h and h < avg_line_height * 2:  # only keep things that are actually lines
             bounding_box_storage[0].append(x)
             bounding_box_storage[1].append(y)
             bounding_box_storage[2].append(w)
@@ -74,7 +75,7 @@ def _analyze_bounding_boxes(bbs, tab_wiggle_room):
     changed = True
     while changed:  # combine ranges until there is nothing left to combine.
         changed = False
-        for i in range(len(ranges)):  # try to conbine at every index
+        for i in range(len(ranges)):  # try to combine at every index
             prev_len = len(ranges)
             ranges = _combine_at_range(i, ranges)
             changed = prev_len != len(ranges)
@@ -89,7 +90,7 @@ def _analyze_bounding_boxes(bbs, tab_wiggle_room):
     ordered_tab_levels = []
     for x in bbs[0]:  # loop over every line and assign it a tab position.
         for i in range(len(tab_levels)):
-            if tab_levels[i] - tab_wiggle_room <= x and tab_levels[i] + tab_wiggle_room >= x:
+            if tab_levels[i] - tab_wiggle_room <= x and x <= tab_levels[i] + tab_wiggle_room:
                 # we've found the correct assignment, move on to next line
                 ordered_tab_levels.append(i)
                 break
