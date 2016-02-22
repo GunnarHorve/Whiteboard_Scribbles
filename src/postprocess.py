@@ -288,15 +288,17 @@ def _add_tabs(s, tabs):
 
 
 def main():
+    """
+    Runs the proofreading algorithm on a "perfectly detected" chunk of text, that is, a Python file with tabs and
+    newline characters stripped from each line.
+    """
     with open('./generate_training_data.py', 'r') as my_file:
         lines = my_file.readlines()
         for i in range(len(lines)):
             lines[i] = lines[i].replace('\t', '').strip(' ').replace('\n', '').replace('\r', '')
 
-        print proofread(lines,
-                        [0, 0, 0, 1, 1, 2, 2, 3, 4, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 3, 2, 2, 2, 2,
-                         2, 2,
-                         1, 0, 1])
+        print proofread(lines, [0, 0, 0, 1, 1, 2, 2, 3, 4, 0, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 2, 2, 3, 2, 3, 2, 2, 2,
+                                2, 2, 2, 1, 0, 1])
 
 
 if __name__ == "__main__":
